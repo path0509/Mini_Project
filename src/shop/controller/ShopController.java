@@ -45,6 +45,8 @@ public class ShopController {
 
     public Customer getLoggedInUser() {
         return loggedInUser;
+
+        // 로그인된 사용자가 없을때 null을 반환하는게 아니라 별도 exception으로 관리하면 좋음.
     }
 
     public void loadProductsFromCSV() {
@@ -135,6 +137,11 @@ public class ShopController {
                         if (p.getStock() <= 0) {
                             System.out.println("[알림] " + p.getPName() + " 재고가 부족합니다.");
                             return; // 결제 중단!
+
+                            //여기서 return을 하면, 저 아래의 "결제에 실패했습니다." 메시지는 출력되지 않을것임.
+                            //try catch를 활용하면 어떨까?
+                            //여기선 throw를 하고 저 아래에서 catch로 받아 실패메시지를 띄우면 좋을거 같음.
+                            //추후에 추가될 결제실패 요소에도 대응하기 쉬워짐.
                         }
                     }
                 }
